@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Top100Films</string>
+
+    <string name="error_film_not_found">Film not found</string>
+    <string name="error_director_not_found">Director not found</string>
+    <string name="error_price_not_found">Price not found</string>
+
+    <!--Buttons-->
+    <string name="bt_add_to_favourites">Add Favourites</string>
+    <string name="bt_see_details">Details</string>
+    <string name="bt_buy_film">Buy</string>
+    <string name="bt_rent_film">Rent</string>
+</resources>
