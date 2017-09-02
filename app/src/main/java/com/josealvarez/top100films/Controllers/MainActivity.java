@@ -1,10 +1,18 @@
 package com.josealvarez.top100films.Controllers;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -14,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.josealvarez.top100films.Adapters.FilmAdapter;
+import com.josealvarez.top100films.DAO.FavouritesDAO;
 import com.josealvarez.top100films.Models.Film;
 import com.josealvarez.top100films.R;
 
@@ -30,24 +39,84 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Const
+    static final String LIST_UPDATED = "The Top has been updated!";
+    static final String LIST_DOESNT_UPDATED = "The Top hasn't got an update!";
+
+    //Attributes
+    @BindView(R.id.fat_go_to_favourites)
+    FloatingActionButton fatFavourites;
+    @BindView(R.id.tv_not_found)
+    TextView notFound;
+    @BindView(R.id.et_searcher)
+    EditText etSearcher;
     @BindView(R.id.rv_filmlist)
     RecyclerView rvFilmList;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private ArrayList<Film> filmsList;
+    private ArrayList<Film> searchedList;
     private String[] titleAndDirector;
     private String completeTittle,title,director,sinopsis,category,picture,price;
+
+    private boolean listChanged;
+    private FavouritesDAO favouritesDAO;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        favouritesDAO = new FavouritesDAO(getApplicationContext());
         filmsList = new ArrayList<>();
         titleAndDirector = new String[2];
 
         downloadFilms();
+
+        fatFavourites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,FavouritesList.class);
+                startActivity(intent);
+            }
+        });
+
+        etSearcher.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                searchedList = favouritesDAO.searchFilms(etSearcher.getText().toString());
+
+                if(!searchedList.isEmpty()){
+                    notFound.setVisibility(View.GONE);
+                    rvFilmList.setVisibility(View.VISIBLE);
+                    generateFilmList(searchedList);
+                }
+                else{
+                    notFound.setVisibility(View.VISIBLE);
+                    rvFilmList.setVisibility(View.GONE);
+                }
+
+                if(etSearcher.getText().toString().isEmpty()){
+                    notFound.setVisibility(View.GONE);
+                    rvFilmList.setVisibility(View.VISIBLE);
+                    generateFilmList(filmsList);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 
     public void downloadFilms(){
@@ -104,8 +173,17 @@ public class MainActivity extends AppCompatActivity {
                                 filmsList.add(new Film(i,title,director,category,sinopsis,picture,price));
                             }
 
-                            //STEP 4: When the list is complete generating the recyclerView
-                            generateFilmList();
+                            //STEP 4: Verify if the list has changed
+                            favouritesDAO = new FavouritesDAO(getApplicationContext());
+                            listChanged = favouritesDAO.verifyUpdates(filmsList);
+
+                            if(listChanged)
+                                Toast.makeText(getApplicationContext(),LIST_UPDATED,Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(getApplicationContext(),LIST_DOESNT_UPDATED,Toast.LENGTH_SHORT).show();
+
+                            //STEP 5: When the list is complete generating the recyclerView
+                            generateFilmList(filmsList);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -135,10 +213,10 @@ public class MainActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    public void generateFilmList(){
+    public void generateFilmList(ArrayList<Film> list){
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,Boolean.FALSE);
         rvFilmList.setLayoutManager(layoutManager);
-        adapter = new FilmAdapter(filmsList,getApplicationContext());
+        adapter = new FilmAdapter(list,getApplicationContext());
         rvFilmList.setAdapter(adapter);
     }
 }

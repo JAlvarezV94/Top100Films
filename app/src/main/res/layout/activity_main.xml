@@ -3,13 +3,48 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.josealvarez.top100films.Controllers.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_filmlist"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    </android.support.v7.widget.RecyclerView>
+        <EditText
+            android:id="@+id/et_searcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginX16"
+            android:gravity="bottom"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_filmlist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_not_found"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/tv_not_found"
+            android:visibility="gone"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fat_go_to_favourites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:rippleColor="@color/colorAccent"
+        android:src="@mipmap/ic_favourite"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/marginX16"/>
 
 </FrameLayout>

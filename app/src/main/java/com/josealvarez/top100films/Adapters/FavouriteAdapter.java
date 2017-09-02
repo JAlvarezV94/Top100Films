@@ -1,6 +1,7 @@
 package com.josealvarez.top100films.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.josealvarez.top100films.Controllers.detailedFilm;
 import com.josealvarez.top100films.Models.Film;
 import com.josealvarez.top100films.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -32,9 +35,6 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
 
         ImageView filmPicture;
         TextView filmName;
-        TextView directorName;
-        TextView filmPrice;
-        Button addFavourites;
         Button seeDetails;
 
         public FavouriteAdapterViewHolder(View itemView) {
@@ -42,9 +42,6 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
 
             filmPicture = itemView.findViewById(R.id.iv_picture_film_list);
             filmName = itemView.findViewById(R.id.tv_name_film_list);
-            directorName = itemView.findViewById(R.id.tv_director_film_list);
-            filmPrice = itemView.findViewById(R.id.tv_price_film_list);
-            addFavourites = itemView.findViewById(R.id.bt_add_favourite);
             seeDetails = itemView.findViewById(R.id.bt_detail);
         }
 
@@ -57,9 +54,20 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
     }
 
     @Override
-    public void onBindViewHolder(FavouriteAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(FavouriteAdapterViewHolder holder, final int position) {
 
+        Picasso.with(context).load(filmList.get(position).getPicture()).into(holder.filmPicture);
+        holder.filmName.setText(filmList.get(position).getTittle());
 
+        //Listener to the buttons
+        holder.seeDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,detailedFilm.class);
+                intent.putExtra("film",filmList.get(position));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

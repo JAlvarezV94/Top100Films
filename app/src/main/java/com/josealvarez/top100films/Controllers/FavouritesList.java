@@ -4,10 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
+import android.view.View;
+import android.widget.TextView;
 
 import com.josealvarez.top100films.Adapters.FavouriteAdapter;
-import com.josealvarez.top100films.Adapters.FilmAdapter;
 import com.josealvarez.top100films.DAO.FavouritesDAO;
 import com.josealvarez.top100films.Models.Film;
 import com.josealvarez.top100films.R;
@@ -19,6 +19,8 @@ import butterknife.ButterKnife;
 
 public class FavouritesList extends AppCompatActivity {
 
+    @BindView(R.id.tv_not_favourites_added)
+    TextView notFavourite;
     @BindView(R.id.rv_favouritelist)
     RecyclerView rvFavouriteList;
     private RecyclerView.Adapter adapter;
@@ -38,10 +40,16 @@ public class FavouritesList extends AppCompatActivity {
         listFavourites = favouritesDAO.readFavoutires();
 
         if(!listFavourites.isEmpty()){
+            rvFavouriteList.setVisibility(View.VISIBLE);
+            notFavourite.setVisibility(View.GONE);
+
             layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,Boolean.FALSE);
             rvFavouriteList.setLayoutManager(layoutManager);
             adapter = new FavouriteAdapter(listFavourites,getApplicationContext());
             rvFavouriteList.setAdapter(adapter);
+        }else{
+            rvFavouriteList.setVisibility(View.GONE);
+            notFavourite.setVisibility(View.VISIBLE);
         }
     }
 }

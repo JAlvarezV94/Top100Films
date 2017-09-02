@@ -1,13 +1,21 @@
 <resources>
     <string name="app_name">Top100Films</string>
 
+    <!--ERRORS-->
     <string name="error_film_not_found">Film not found</string>
     <string name="error_director_not_found">Director not found</string>
     <string name="error_price_not_found">Price not found</string>
 
+    <!--TEXTS-->
+    <string name="tv_not_favourit_list">You don\'t have any films favourite already</string>
+    <string name="tv_not_found">Film not found</string>
+    <string name="tv_film_name">TITLE:</string>
+    <string name="tv_film_director">DIRECTOR:</string>
+    <string name="tv_film_category">CATEGORY: </string>
+    <string name="tv_summary">SUMMARY: \n\n</string>
+
     <!--Buttons-->
-    <string name="bt_add_to_favourites">Add Favourites</string>
+    <string name="bt_add_to_favourites">Add to Favourites</string>
+    <string name="bt_remove_to_favourites">Remove to Favourites</string>
     <string name="bt_see_details">Details</string>
-    <string name="bt_buy_film">Buy</string>
-    <string name="bt_rent_film">Rent</string>
 </resources>

@@ -23,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
-        createTables = "CREATE TABLE Favourites(" +
+        createTables = "CREATE TABLE Films(" +
                 "id INTEGER NOT NULL," +
                 "title TEXT NOT NULL," +
                 "director TEXT NOT NULL," +
@@ -31,8 +31,9 @@ public class DBHelper extends SQLiteOpenHelper{
                 "summary TEXT NOT NULL," +
                 "picture TEXT NOT NULL," +
                 "price TEXT NOT NULL," +
+                "favourite INTEGER," +
                 "CONSTRAINT PKFavourites PRIMARY KEY (id)," +
-                "CONSTRAINT UQFavourites UNIQUE (tite,director,summary))";
+                "CONSTRAINT UQFavourites UNIQUE (title,director,summary))";
 
         sqLiteDatabase.execSQL(createTables);
     }

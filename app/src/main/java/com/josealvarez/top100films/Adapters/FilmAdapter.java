@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.josealvarez.top100films.Controllers.FavouritesList;
 import com.josealvarez.top100films.Controllers.detailedFilm;
 import com.josealvarez.top100films.Models.Film;
 import com.josealvarez.top100films.R;
@@ -37,9 +36,6 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmAdapterVie
 
         ImageView filmPicture;
         TextView filmName;
-        TextView directorName;
-        TextView filmPrice;
-        Button addFavourites;
         Button seeDetails;
 
         public FilmAdapterViewHolder(View itemView) {
@@ -47,9 +43,6 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmAdapterVie
 
             filmPicture = itemView.findViewById(R.id.iv_picture_film_list);
             filmName = itemView.findViewById(R.id.tv_name_film_list);
-            directorName = itemView.findViewById(R.id.tv_director_film_list);
-            filmPrice = itemView.findViewById(R.id.tv_price_film_list);
-            addFavourites = itemView.findViewById(R.id.bt_add_favourite);
             seeDetails = itemView.findViewById(R.id.bt_detail);
         }
 
@@ -66,10 +59,8 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmAdapterVie
 
         Picasso.with(context).load(filmList.get(position).getPicture()).into(holder.filmPicture);
         holder.filmName.setText(filmList.get(position).getTittle());
-        holder.directorName.setText(filmList.get(position).getDirector());
-        holder.filmPrice.setText(filmList.get(position).getPrice());
 
-        //Listener to the buttons
+        //Listener to the button
         holder.seeDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,13 +70,6 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmAdapterVie
             }
         });
 
-        holder.addFavourites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, FavouritesList.class);
-                context.startActivity(intent);
-            }
-        });
     }
 
     @Override
