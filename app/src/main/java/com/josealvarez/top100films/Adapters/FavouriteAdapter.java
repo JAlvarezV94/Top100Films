@@ -59,7 +59,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Favo
         Picasso.with(context).load(filmList.get(position).getPicture()).into(holder.filmPicture);
         holder.filmName.setText(filmList.get(position).getTittle());
 
-        //Listener to the buttons
+        //Listener for the buttons
         holder.seeDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

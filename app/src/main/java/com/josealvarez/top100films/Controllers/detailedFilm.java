@@ -22,7 +22,7 @@ public class detailedFilm extends AppCompatActivity {
 
     //Const
     static final String ADD_FAVOURITES_MESSAGE = "Added to favourites";
-    static final String REMOVE_FAVOURITES_MESSAGE = "Removed to favourites";
+    static final String REMOVE_FAVOURITES_MESSAGE = "Removed from favourites";
     static final byte ADD_FILM = 1;
     static final byte REMOVE_FILM = 0;
 
@@ -52,16 +52,16 @@ public class detailedFilm extends AppCompatActivity {
         setContentView(R.layout.activity_detailed_film);
         ButterKnife.bind(this);
 
-        //Rescue the DB
+        //Rescuing the DB
         favouritesDAO = new FavouritesDAO(getApplicationContext());
 
-        //STEP 1: recover the film sent
+        //STEP 1: recovering the received film
         currentFilm = getIntent().getParcelableExtra("film");
 
         //STEP 2: Filling the film
         fillFilm();
 
-        //STEP 3: Verify if the film is added to favorite to change the button
+        //STEP 3: Verifying if the film was added to favorite to change the button
         favourite = favouritesDAO.verifyFavourites(currentFilm);
 
         if(favourite==0){
@@ -77,7 +77,7 @@ public class detailedFilm extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //Saving the current film into the favourite table
+                //Updating the current film in the Films table
                 updated = favouritesDAO.addFavourites(currentFilm,ADD_FILM);
 
                 if(updated){
@@ -93,7 +93,7 @@ public class detailedFilm extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //Saving the current film into the favourite table
+                //Updating the current film in the Films table
                 updated = favouritesDAO.addFavourites(currentFilm,REMOVE_FILM);
 
                 if(updated){

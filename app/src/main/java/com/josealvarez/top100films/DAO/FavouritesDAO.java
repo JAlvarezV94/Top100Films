@@ -113,7 +113,7 @@ public class FavouritesDAO {
 
 
         try{
-            //STEP 1: Opening the DB Writable
+            //STEP 1: Opening the writable DB
             db = dbHelper.getWritableDatabase();
             register = new ContentValues();
 

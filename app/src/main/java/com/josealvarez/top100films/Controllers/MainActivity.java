@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Const
     static final String LIST_UPDATED = "The Top has been updated!";
-    static final String LIST_DOESNT_UPDATED = "The Top hasn't got an update!";
+    static final String LIST_DOESNT_UPDATED = "There aren't any updates!";
 
     //Attributes
     @BindView(R.id.fat_go_to_favourites)
@@ -130,17 +130,17 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
 
-                            //STEP 1: Get the array with the 100 films
+                            //STEP 1: Getting the array with the 100 films
                             JSONObject feed = response.getJSONObject("feed");
                             JSONArray entry = feed.getJSONArray("entry");
 
-                            //STEP 2: Obtaining every data that we want for the 100 films
+                            //STEP 2: Obtaining all the data that we want for the 100 films
                             for(int i = 1; i <= entry.length(); i++){
 
                                 //STEP 3: Getting the current film
                                 JSONObject currentFilm = entry.getJSONObject(i-1);
 
-                                //Obtaining and separating tittle and director
+                                //Obtaining and separating title and director
                                 JSONObject titleJson = currentFilm.getJSONObject("title");
                                 completeTittle = titleJson.getString("label");
                                 titleAndDirector = completeTittle.split("-");
@@ -165,11 +165,11 @@ public class MainActivity extends AppCompatActivity {
                                 JSONObject imageJson = imageArray.getJSONObject(2);
                                 picture = imageJson.getString("label");
 
-                                //Obtaining the price (obtained like string cause it's a string in the Json)
+                                //Obtaining the price (obtained as string because it's a string in the Json)
                                 JSONObject rentalPrice = currentFilm.getJSONObject("im:price");
                                 price = rentalPrice.getString("label");
 
-                                //Adding the last one to the list
+                                //Adding the last one obtained to the list
                                 filmsList.add(new Film(i,title,director,category,sinopsis,picture,price));
                             }
 
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                             else
                                 Toast.makeText(getApplicationContext(),LIST_DOESNT_UPDATED,Toast.LENGTH_SHORT).show();
 
-                            //STEP 5: When the list is complete generating the recyclerView
+                            //STEP 5: When the list is complete, generating the recyclerView
                             generateFilmList(filmsList);
 
                         } catch (JSONException e) {
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         ) {
 
             /*AND THIS METHOD IS TO ADD PARAMS FOR THE GET, BUT VOLLEY HAS A BUG WITH THAT,
-              SO I HAVE IMPLEMENT THE PARAMS FOR THE SEARCH IN THE URL.*/
+              SO I HAVE IMPLEMENTED THE PARAMS IN THE URL FOR THE SEARCH.*/
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 

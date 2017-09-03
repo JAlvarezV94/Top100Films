@@ -60,7 +60,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmAdapterVie
         Picasso.with(context).load(filmList.get(position).getPicture()).into(holder.filmPicture);
         holder.filmName.setText(filmList.get(position).getTittle());
 
-        //Listener to the button
+        //Listener for the button
         holder.seeDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
