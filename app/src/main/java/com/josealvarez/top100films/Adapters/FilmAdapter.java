@@ -66,6 +66,7 @@ public class FilmAdapter extends RecyclerView.Adapter<FilmAdapter.FilmAdapterVie
             public void onClick(View view) {
                 Intent intent = new Intent(context,detailedFilm.class);
                 intent.putExtra("film",filmList.get(position));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         });

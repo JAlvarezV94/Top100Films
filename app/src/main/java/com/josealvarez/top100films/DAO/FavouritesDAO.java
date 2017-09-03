@@ -60,8 +60,6 @@ public class FavouritesDAO {
 
 
             }
-
-            addFilms(newFilms);
             if(cursor != null)
                 cursor.close();
         }catch (SQLException e){
@@ -70,6 +68,7 @@ public class FavouritesDAO {
             if(db != null)
                 if(db.isOpen())
                     db.close();
+            addFilms(newFilms);
         }
 
         return updatedTable;
